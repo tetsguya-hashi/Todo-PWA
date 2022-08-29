@@ -4,12 +4,14 @@ import './service/firebase';
 
 import Header from './components/Header';
 import { AuthProvider } from './providers/AuthProvider';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
         <Header />
+        <Dashboard />
       </AuthProvider>
     </div>
   );
