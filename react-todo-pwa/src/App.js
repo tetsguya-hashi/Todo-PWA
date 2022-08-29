@@ -5,7 +5,6 @@ import './service/firebase';
 import Header from './components/Header';
 import { AuthProvider } from './providers/AuthProvider';
 
-
 function App() {
   return (
     <div className="App">

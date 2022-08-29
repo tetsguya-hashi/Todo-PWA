@@ -1,15 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
+import dig from 'object-dig';
+
 import { AuthContext } from '../providers/AuthProvider';
-import { sinInWithGoogle } from '../service/firebase'
+import { singInWithGoogle, logOut } from '../service/firebase';
 
 const Header = () => {
   const currentUser = useContext(AuthContext);
-  console.log(currentUser);
+  const buttonRebder = () => {
+    let buttonDom;
+    if (dig(currentUser, 'currentUser')) {
+      buttonDom = <button onClick={logOut}>ログアウト</button>
+    } else {
+      buttonDom = <button onClick={singInWithGoogle}>ログイン</button>
+    }
+    return buttonDom;
+  }
   return (
     <div>
       <header>
         ヘッダー
-        <button onClick={sinInWithGoogle}>ログイン</button>
+        {buttonRebder()}
       </header>
     </div>
   )

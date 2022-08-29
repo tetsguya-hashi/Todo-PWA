@@ -16,10 +16,20 @@ firebase.initializeApp({
 const googleProbider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth();
 
-export const sinInWithGoogle = () => {
+export const singInWithGoogle = () => {
   firebase.auth().signInWithPopup(googleProbider)
     .then((res) => {
       console.log(res.user);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    })
+}
+export const logOut = () => {
+  firebase.auth().signOut()
+    .then((res) => {
+      console.log(res.user);
+      document.location.reload();
     })
     .catch((error) => {
       console.log(error.message);
