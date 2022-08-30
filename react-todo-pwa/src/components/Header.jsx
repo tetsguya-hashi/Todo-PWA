@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import dig from 'object-dig';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material'
 
 import { AuthContext } from '../providers/AuthProvider';
 import { singInWithGoogle, logOut } from '../service/firebase';
@@ -7,22 +8,19 @@ import { singInWithGoogle, logOut } from '../service/firebase';
 const Header = () => {
   const currentUser = useContext(AuthContext);
   console.log(dig(currentUser, 'currentUser', 'uid'))
-  const buttonRebder = () => {
-    // let buttonDom;
-    // if (dig(currentUser, 'currentUser')) {
-    //   buttonDom = <button onClick={logOut}>ログアウト</button>
-    // } else {
-    //   buttonDom = <button onClick={singInWithGoogle}>ログイン</button>
-    // }
-    // return buttonDom;
-    (dig(currentUser, 'currentUser', 'uid')) ? (<button onClick={logOut}>ログアウト</button>) : (<button onClick={singInWithGoogle}>ログイン</button>);
-  }
+  // const buttonRebder = () => {
+  //   (dig(currentUser, 'currentUser', 'uid')) ? (<Button onClick={logOut}>ログアウト</Button>) : (<Button variant="contained" onClick={singInWithGoogle}>ログイン</Button>);
+  // }
   return (
     <div>
-      <header>
-        ヘッダー
-        {(dig(currentUser, 'currentUser')) ? (<button onClick={logOut}>ログアウト</button>) : (<button onClick={singInWithGoogle}>ログイン</button>)}
-      </header>
+      <AppBar postion='static'>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Typography variant='h6' position='static'>
+            ReactTodoPWA
+          </Typography>
+          {(dig(currentUser, 'currentUser')) ? (<Button variant="outlined" color="inherit" onClick={logOut}>ログアウト</Button>) : (<Button variant='inherit' onClick={singInWithGoogle}>ログイン</Button>)}
+        </Toolbar>
+      </AppBar>
     </div>
   )
 }

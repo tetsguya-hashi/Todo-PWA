@@ -17,6 +17,7 @@ export const initGet = async (uid) => {
     .where('uid', '==', uid);
 
   return todo.get().then((snapShot) => {
+    console.log(`snapshot get`)
     let todos = [];
     snapShot.forEach((doc) => {
       todos.push({
@@ -27,4 +28,8 @@ export const initGet = async (uid) => {
     });
     return todos;
   });
+}
+
+export const todoDelete = (id) => {
+  db.collection('todo').doc(id).delete();
 }
