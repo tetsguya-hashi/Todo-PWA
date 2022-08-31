@@ -10,6 +10,7 @@ const ChecboxComponent = ({ id, fetch, isComplete }) => {
     await toggleComplete(id);
     fetch();
   }
+
   return (
     <>
       <ListItemIcon>
