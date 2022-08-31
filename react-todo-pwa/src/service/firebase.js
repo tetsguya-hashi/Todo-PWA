@@ -2,6 +2,7 @@
 import firebase from 'firebase/compat/app';
 import { initializeApp } from "firebase/app" //v9
 import 'firebase/compat/auth';
+import { getAuth } from "firebase/auth"; //v9
 import 'firebase/compat/firestore';
 
 firebase.initializeApp({
@@ -15,7 +16,7 @@ firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-const firebaseApp = initializeApp({
+const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
@@ -26,10 +27,11 @@ const firebaseApp = initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-export default firebaseApp;
+export default app;
 
 const googleProbider = new firebase.auth.GoogleAuthProvider();
-export const auth = firebase.auth();
+// export const auth = firebase.auth();
+export const auth = getAuth(app); //v9
 export const db = firebase.firestore();
 db.enablePersistence();
 
