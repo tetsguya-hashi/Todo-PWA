@@ -2,7 +2,7 @@
 import firebase from 'firebase/compat/app';
 import { initializeApp } from "firebase/app" //v9
 import 'firebase/compat/auth';
-import { getAuth } from "firebase/auth"; //v9
+import { getAuth, GoogleAuthProvider } from "firebase/auth"; //v9
 import 'firebase/compat/firestore';
 
 firebase.initializeApp({
@@ -29,15 +29,17 @@ const app = initializeApp({
 
 export default app;
 
-const googleProbider = new firebase.auth.GoogleAuthProvider();
-// export const auth = firebase.auth();
+// const googleProbider = new firebase.auth.GoogleAuthProvider(); //v8
+const provider = new GoogleAuthProvider(); //v9
+// export const auth = firebase.auth(); //v8
 export const auth = getAuth(app); //v9
 export const db = firebase.firestore();
+
 db.enablePersistence();
 
 
 export const singInWithGoogle = () => {
-  firebase.auth().signInWithPopup(googleProbider)
+  firebase.auth().signInWithPopup(provider)
     .then((res) => {
       console.log(res.user);
     })
