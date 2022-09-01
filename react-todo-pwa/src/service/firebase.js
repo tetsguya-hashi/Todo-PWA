@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app" //v9
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth"; //v9
-import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore"; //9
+import { initializeApp } from "firebase/app"
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 
 const firebaseApp = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,24 +13,14 @@ const firebaseApp = initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-export default firebaseApp;
-
-// const googleProbider = new firebase.auth.GoogleAuthProvider(); //v8
-const provider = new GoogleAuthProvider(); //v9
-// export const auth = firebase.auth(); //v8
-export const auth = getAuth(firebaseApp); //v9
-// export const db = firebase.firestore(); //v8
-export const db = getFirestore(firebaseApp); //v9
+export default firebaseApp; const provider = new GoogleAuthProvider();
+export const auth = getAuth(firebaseApp);
+export const db = getFirestore(firebaseApp);
 
 enableIndexedDbPersistence(db); //オフライン時の管理
 
 
 export const singInWithGoogle = () => {
-  // firebase.auth().signInWithPopup(provider).then((res) => {
-  //   console.log(res.user);
-  // }).catch((error) => {
-  //   console.log(error.message);
-  // });
   const auth = getAuth();
   signInWithPopup(auth, provider).then((res) => {
     console.log(`ユーザー：${res.user}`);
@@ -39,12 +29,6 @@ export const singInWithGoogle = () => {
   });
 }
 export const logOut = () => {
-  // firebase.auth().signOut().then((res) => {
-  //   console.log(res.user);
-  //   document.location.reload();
-  // }).catch((error) => {
-  //   console.log(error.message);
-  // });
   const auth = getAuth();
   signOut(auth).then((res) => {
     console.log(res.user);
