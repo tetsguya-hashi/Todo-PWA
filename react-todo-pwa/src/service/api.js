@@ -1,25 +1,24 @@
-import firebase from "firebase";
+import { collection, addDoc, query, orderBy, doc, where, getDocs, deleteDoc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
+
 import { db } from './firebase';
 
-export const addTodo = (content, uid) => {
-  db.collection('todo').add({
+export const addTodo = async (content, uid) => {
+  await addDoc(collection(db, 'todo'), {
     content: content,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    createdAt: serverTimestamp(),
     isComplete: false,
     uid: uid
   })
 }
 
 export const initGet = async (uid) => {
-  const todo = await db
-    .collection('todo')
-    .orderBy('createdAt', 'desc')
-    .where('uid', '==', uid);
+  const todo = await query(collection(db, 'todo'), orderBy('createdAt', 'desc'), where('uid', '==', uid));
+  const querySnapshot = await getDocs(todo);
 
-  return todo.get().then((snapShot) => {
+  return (() => {
     console.log(`snapshot get`)
     let todos = [];
-    snapShot.forEach((doc) => {
+    querySnapshot.forEach((doc) => {
       todos.push({
         id: doc.id,
         content: doc.data().content,
@@ -30,14 +29,16 @@ export const initGet = async (uid) => {
   });
 }
 
-export const todoDelete = (id) => {
-  db.collection('todo').doc(id).delete();
+export const todoDelete = async (id) => {
+  await deleteDoc(doc(db, 'todo', id))
 }
 
 export const toggleComplete = async (id) => {
-  const todo = await db.collection('todo').doc(id).get();
-  return db.collection('todo').doc(id).update({
-    isComplete: todo.data().isComplete ? false : true,
-    updateAt: firebase.firestore.FieldValue.serverTimestamp(),
+  const todo = await doc(db, 'todo', id)
+  const docSnap = await getDoc(todo);
+  console.log(docSnap.data().isComplete);
+  return updateDoc(todo, {
+    isComplete: docSnap.data().isComplete ? false : true,
+    updateAt: serverTimestamp(),
   })
 }
