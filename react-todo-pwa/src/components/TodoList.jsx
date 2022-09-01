@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import dig from 'object-dig';
-import { IconButton, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Checkbox } from '@mui/material';
+import { IconButton, ListItem, ListItemText, ListItemSecondaryAction } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Styled from 'styled-components';
 
@@ -12,14 +10,23 @@ const TodoList = ({ todos, fetch }) => {
     await Api.todoDelete(id);
     fetch();
   }
-
+  const textLine = (todo) => {
+    if (todo.isComplete) {
+      <ListItemText primary={todo.content} sx={todo.isComplete && { textDecoration: 'line-through', opacity: 0.5 }} />
+    } else {
+      <ListItemText primary={todo.content} sx={todo.isComplete && { textDecoration: 'line-through', opacity: 0.5 }} />
+    }
+  }
   return (
     <div>
       <Sul>
         {todos.map((todo) => (
           <ListItem key={todo.id}>
             <ChecboxComponent id={todo.id} fetch={fetch} isComplete={todo.isComplete} />
-            <ListItemText primary={todo.content} />
+            {todo.isComplete ?
+              <ListItemText primary={todo.content} sx={{ textDecoration: 'line-through', opacity: 0.5 }} /> :
+              <ListItemText primary={todo.content} />
+            }
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="delete" onClick={() => { deleteHandler(todo.id) }}>
                 <DeleteIcon />

@@ -1,4 +1,4 @@
-import { collection, addDoc, query, orderBy, doc, where, getDocs, deleteDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, query, orderBy, doc, where, getDocs, deleteDoc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 
 import { db } from './firebase';
 
@@ -35,9 +35,10 @@ export const todoDelete = async (id) => {
 
 export const toggleComplete = async (id) => {
   const todo = await doc(db, 'todo', id)
-  console.log(todo)
+  const docSnap = await getDoc(todo);
+  console.log(docSnap.data().isComplete);
   return updateDoc(todo, {
-    isComplete: todo.isComplete ? false : true,
+    isComplete: docSnap.data().isComplete ? false : true,
     updateAt: serverTimestamp(),
   })
 }
