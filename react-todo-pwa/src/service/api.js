@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import firebase from "firebase/compat/app"; //v8
 import { collection, addDoc, query, orderBy, doc, where, getDocs, deleteDoc } from "firebase/firestore";
 
@@ -41,8 +42,9 @@ export const initGet = async (uid) => {
   });
 }
 
-export const todoDelete = (id) => {
-  db.collection('todo').doc(id).delete();
+export const todoDelete = async (id) => {
+  // db.collection('todo').doc(id).delete(); //8
+  await deleteDoc(doc(db, 'todo', id))
 }
 
 export const toggleComplete = async (id) => {
