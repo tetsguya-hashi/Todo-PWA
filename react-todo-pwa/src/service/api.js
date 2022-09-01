@@ -1,8 +1,16 @@
-import firebase from "firebase/compat/app";
+import firebase from "firebase/compat/app"; //v8
+import { collection, addDoc, query, orderBy, doc, where, getDocs, deleteDoc } from "firebase/firestore";
+
 import { db } from './firebase';
 
-export const addTodo = (content, uid) => {
-  db.collection('todo').add({
+export const addTodo = async (content, uid) => {
+  // db.collection('todo').add({
+  //   content: content,
+  //   createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //   isComplete: false,
+  //   uid: uid
+  // })
+  await addDoc(collection(db, 'todo'), {
     content: content,
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     isComplete: false,
@@ -11,15 +19,18 @@ export const addTodo = (content, uid) => {
 }
 
 export const initGet = async (uid) => {
-  const todo = await db
-    .collection('todo')
-    .orderBy('createdAt', 'desc')
-    .where('uid', '==', uid);
+  // const todo = await db
+  //   .collection('todo')
+  //   .orderBy('createdAt', 'desc')
+  //   .where('uid', '==', uid);
+  const todo = await query(collection(db, 'todo'), where('uid', '==', uid));
+  const querySnapshot = await getDocs(todo);
 
-  return todo.get().then((snapShot) => {
+  // return todo.get().then((snapShot) => {
+  return (() => {
     console.log(`snapshot get`)
     let todos = [];
-    snapShot.forEach((doc) => {
+    querySnapshot.forEach((doc) => {
       todos.push({
         id: doc.id,
         content: doc.data().content,

@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app" //v9
 import 'firebase/compat/auth';
 import { getAuth, GoogleAuthProvider } from "firebase/auth"; //v9
 import 'firebase/compat/firestore';
+import { enableIndexedDbPersistence } from "firebase/firestore"; //9
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -16,7 +17,7 @@ firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-const app = initializeApp({
+const firebaseApp = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
@@ -27,15 +28,16 @@ const app = initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-export default app;
+export default firebaseApp;
 
 // const googleProbider = new firebase.auth.GoogleAuthProvider(); //v8
 const provider = new GoogleAuthProvider(); //v9
 // export const auth = firebase.auth(); //v8
-export const auth = getAuth(app); //v9
-export const db = firebase.firestore();
+export const auth = getAuth(firebaseApp); //v9
+// export const db = firebase.firestore(); //v8
+const db = getFirestore(firebaseApp); //v9
 
-db.enablePersistence();
+enableIndexedDbPersistence(db); //オフライン時の管理
 
 
 export const singInWithGoogle = () => {
