@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app" //v9
 import 'firebase/compat/auth';
 import { getAuth, GoogleAuthProvider } from "firebase/auth"; //v9
 import 'firebase/compat/firestore';
-import { enableIndexedDbPersistence } from "firebase/firestore"; //9
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore"; //9
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -35,7 +35,7 @@ const provider = new GoogleAuthProvider(); //v9
 // export const auth = firebase.auth(); //v8
 export const auth = getAuth(firebaseApp); //v9
 // export const db = firebase.firestore(); //v8
-const db = getFirestore(firebaseApp); //v9
+export const db = getFirestore(firebaseApp); //v9
 
 enableIndexedDbPersistence(db); //オフライン時の管理
 
