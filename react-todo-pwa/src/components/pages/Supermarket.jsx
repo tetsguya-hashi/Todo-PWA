@@ -9,7 +9,7 @@ const Supermarket = () => {
     <div>
       <AuthProvider>
         <Header />
-        <Dashboard />
+        <Dashboard collectionName={'todo'} />
         <Footer />
       </AuthProvider>
     </div>

@@ -3,6 +3,8 @@ import './App.css';
 import './service/firebase';
 
 import Router from './router/Router';
+import Nav from './components/Nav';
+
 
 function App() {
   return (
@@ -15,3 +17,4 @@ function App() {
 }
 
 export default App;
+

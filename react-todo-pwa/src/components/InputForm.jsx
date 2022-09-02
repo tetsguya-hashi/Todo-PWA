@@ -6,17 +6,16 @@ import * as Api from '../service/api';
 
 import { AuthContext } from '../providers/AuthProvider';
 
-const InputForm = ({ fetch, inputName, setInputName }) => {
+const InputForm = ({ fetch, inputName, setInputName, collectionName }) => {
   const currentUser = useContext(AuthContext);
   const post = () => {
     if (inputName === '') return;
-    Api.addTodo(inputName, currentUser.currentUser.uid)
+    Api.addTodo(inputName, currentUser.currentUser.uid, collectionName)
     setInputName('');
     fetch();
   }
   return (
     <>
-      <h2>あなたのTodo</h2>
       <SForm>
         <STextField id="standard-basic" variant="standard" type="text" label='Todo name' onChange={((e) => setInputName(e.target.value))} value={inputName} />
         <SButton variant='contained' type='button' onClick={post} disabled={!inputName} >追加</SButton>
