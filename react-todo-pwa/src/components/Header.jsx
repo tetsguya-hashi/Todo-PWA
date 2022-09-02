@@ -7,10 +7,8 @@ import { singInWithGoogle, logOut } from '../service/firebase';
 
 const Header = () => {
   const currentUser = useContext(AuthContext);
-  console.log(dig(currentUser, 'currentUser', 'uid'))
-  // const buttonRebder = () => {
-  //   (dig(currentUser, 'currentUser', 'uid')) ? (<Button onClick={logOut}>ログアウト</Button>) : (<Button variant="contained" onClick={singInWithGoogle}>ログイン</Button>);
-  // }
+  console.log(dig(currentUser, 'currentUser', 'uid'));
+
   return (
     <div>
       <AppBar postion='static'>

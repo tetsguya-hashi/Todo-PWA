@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.css-10hburv-MuiTypography-root {
+  overflow-wrap: break-word;
+}
